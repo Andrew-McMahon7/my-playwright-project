@@ -1,6 +1,7 @@
 import { Page } from 'playwright';
 import {expect} from "@playwright/test";
-import holidayEntitlementPage_content from "../content/holidayEntitlementPage_content";0
+import holidayEntitlementPage_content from "../content/holidayEntitlementPage_content";
+import axeTest from "../accessibilityTestHelper";
 
 class HolidayEntitlementPage {
     private readonly title: string;
@@ -32,6 +33,8 @@ class HolidayEntitlementPage {
             expect(page.locator(this.radioCompressedHours)).toContainText(holidayEntitlementPage_content.radioCompressedHours),
             // indentation scuffed above.
         ]);
+
+        await axeTest(page);
     }
 
     async continueOn(page: Page): Promise<void> {

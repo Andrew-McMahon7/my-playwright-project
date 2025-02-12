@@ -1,6 +1,7 @@
 import { Page } from 'playwright';
 import {expect} from "@playwright/test";
-import daysWorkedPage_content from "../content/daysWorkedPage_content";0
+import daysWorkedPage_content from "../content/daysWorkedPage_content";
+import axeTest from "../accessibilityTestHelper";
 
 class DaysWorkedPage {
     private readonly title: string;
@@ -20,6 +21,8 @@ class DaysWorkedPage {
             expect(page.locator(this.text)).toContainText(daysWorkedPage_content.divText),
             // indentation scuffed above.
         ]);
+
+        await axeTest(page);
     }
 
     async continueOn(page: Page): Promise<void> {

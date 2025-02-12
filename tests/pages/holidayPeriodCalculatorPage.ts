@@ -1,6 +1,7 @@
 import { Page } from 'playwright';
 import {expect} from "@playwright/test";
-import holidayPeriodCalculatorPage_content from "../content/holidayPeriodCalculatorPage_content";0
+import holidayPeriodCalculatorPage_content from "../content/holidayPeriodCalculatorPage_content";
+import axeTest from "../accessibilityTestHelper";
 
 class HolidayPeriodCalculatorPage {
     private readonly title: string;
@@ -27,6 +28,8 @@ class HolidayPeriodCalculatorPage {
             expect(page.locator(this.radioStartAndLeavePartWayThroughYear)).toContainText(holidayPeriodCalculatorPage_content.radioStartAndLeavePartWayThroughYear),
             // indentation scuffed above.
         ]);
+
+        await axeTest(page);
     }
 
     async continueOn(page: Page): Promise<void> {

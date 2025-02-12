@@ -31,3 +31,12 @@ test('Calculate Holiday Entitlement for Full Year', async ({page}): Promise<void
     await resultPage.checkPageLoads(page);
 
 });
+
+test(`Page object model unhappy path`, async ({ page }): Promise<void> => {
+    const landingPage: LandingPage = new LandingPage();
+    await landingPage.checkPageLoads(page);
+    await landingPage.continueOn(page);
+    const irregularHoursPage: IrregularHoursPage = new IrregularHoursPage();
+    await irregularHoursPage.checkPageLoads(page);
+    await irregularHoursPage.triggerErrorMessages(page);
+});

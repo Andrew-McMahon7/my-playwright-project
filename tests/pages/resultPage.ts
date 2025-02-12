@@ -1,6 +1,7 @@
 import { Page } from 'playwright';
 import {expect} from "@playwright/test";
-import resultPage_content from "../content/resultPage_content";0
+import resultPage_content from "../content/resultPage_content";
+import axeTest from "../accessibilityTestHelper";
 
 class ResultPage {
     private readonly title: string;
@@ -18,6 +19,8 @@ class ResultPage {
             expect(page.locator(this.text)).toContainText(resultPage_content.divText),
             // indentation scuffed above.
         ]);
+
+        await axeTest(page);
     }
 }
 
