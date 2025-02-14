@@ -1,0 +1,21 @@
+{
+  "name": "my-playwright-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "andrewmcmahon <andrew.mcmahon@solirius.com>",
+  "license": "MIT",
+  "packageManager": "yarn@4.6.0",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.3",
+    "playwright": "^1.50.1",
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "test:chrome": "playwright test --project chromium --headed",
+    "test:firefox": "playwright test --project firefox --headed",
+    "test:webkit": "playwright test --project webkit --headed",
+    "test:all": "playwright test --headed"
+  }
+}
