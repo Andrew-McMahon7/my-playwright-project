@@ -1,4 +1,4 @@
-const holidayEntitlementPage_content = {
+const holidayEntitlement_content = {
     pageTitle: "Is the holiday entitlement based on:",
     divText: "Check the employment contract if you’re not sure about the holiday entitlement.",
     radioDaysPerWeek: "days worked per week",
@@ -7,4 +7,4 @@ const holidayEntitlementPage_content = {
     radioCompressedHours: "compressed hours",
     radioShift: "shift",
 } as const;
-export default holidayEntitlementPage_content
+export default holidayEntitlement_content

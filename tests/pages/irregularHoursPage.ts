@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 import {expect} from "@playwright/test";
-import irregularHoursPage_content from "../content/irregularHoursPage_content";
+import irregularHours_content from "../content/irregularHours_content";
 import axeTest from "../accessibilityTestHelper";
 
 class IrregularHoursPage {
@@ -23,20 +23,27 @@ class IrregularHoursPage {
     async checkPageLoads(page: Page): Promise<void> {
         // Check elements of the page
         await Promise.all([
-            expect(page.locator(this.title)).toContainText(irregularHoursPage_content.pageTitle),
-            expect(page.locator(this.text)).toContainText(irregularHoursPage_content.divText),
-            expect(page.locator(this.radioYes)).toContainText(irregularHoursPage_content.radioYes),
-            expect(page.locator(this.radioNo)).toContainText(irregularHoursPage_content.radioNo),
+            expect(page.locator(this.title)).toContainText(irregularHours_content.pageTitle),
+            expect(page.locator(this.text)).toContainText(irregularHours_content.divText),
+            expect(page.locator(this.radioYes)).toContainText(irregularHours_content.radioYes),
+            expect(page.locator(this.radioNo)).toContainText(irregularHours_content.radioNo),
             // indentation scuffed above.
         ]);
 
         await axeTest(page);
     }
 
-    async continueOn(page: Page): Promise<void> {
-        // Click the continue button
-        await this.clickNo(page);
+    async continueOn(page: Page, isIrregular: boolean): Promise<void> {
+        if (isIrregular) {
+            await this.clickYes(page);
+        } else {
+            await this.clickNo(page);
+        }
         await page.getByRole("button", { name: "Continue" }).click();
+    }
+
+    async clickYes(page: Page): Promise<void> {
+        await page.locator(this.radioYes).click();
     }
 
     async clickNo(page: Page): Promise<void> {
@@ -46,8 +53,8 @@ class IrregularHoursPage {
     async triggerErrorMessages(page: Page): Promise<void> {
         await page.getByRole("button", { name: "Continue" }).click();
         await Promise.all([
-            expect(page.locator(this.errorBanner)).toHaveText(irregularHoursPage_content.errorBanner),
-            expect(page.locator(this.errorMessage)).toContainText(irregularHoursPage_content.errorMessage),
+            expect(page.locator(this.errorBanner)).toHaveText(irregularHours_content.errorBanner),
+            expect(page.locator(this.errorMessage)).toContainText(irregularHours_content.errorMessage),
         ]);
     }
 }

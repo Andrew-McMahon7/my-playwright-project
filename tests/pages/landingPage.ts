@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 import {expect} from "@playwright/test";
-import landingPage_content from "../content/landingPage_content";
+import landing_content from "../content/landing_content";
 import axeTest from "../accessibilityTestHelper";
 
 class LandingPage {
@@ -20,10 +20,10 @@ class LandingPage {
 
         // Check elements of the page
         await Promise.all([
-            expect(page.locator(this.text)).toContainText(landingPage_content.pText1),
-            expect(page.locator(this.text)).toContainText(landingPage_content.pText2),
-            expect(page.locator(this.text)).toContainText(landingPage_content.liText1),
-            expect(page.locator(this.text)).toContainText(landingPage_content.liText2),
+            expect(page.locator(this.text)).toContainText(landing_content.pText1),
+            expect(page.locator(this.text)).toContainText(landing_content.pText2),
+            expect(page.locator(this.text)).toContainText(landing_content.liText1),
+            expect(page.locator(this.text)).toContainText(landing_content.liText2),
             // indentation scuffed above.
         ]);
 

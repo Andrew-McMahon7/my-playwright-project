@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 import {expect} from "@playwright/test";
-import holidayEntitlementPage_content from "../content/holidayEntitlementPage_content";
+import holidayEntitlement_content from "../content/holidayEntitlement_content";
 import axeTest from "../accessibilityTestHelper";
 
 class HolidayEntitlementPage {
@@ -25,12 +25,12 @@ class HolidayEntitlementPage {
     async checkPageLoads(page: Page): Promise<void> {
         // Check elements of the page
         await Promise.all([
-            expect(page.locator(this.title)).toContainText(holidayEntitlementPage_content.pageTitle),
-            expect(page.locator(this.text)).toContainText(holidayEntitlementPage_content.divText),
-            expect(page.locator(this.radioDaysPerWeek)).toContainText(holidayEntitlementPage_content.radioDaysPerWeek),
-            expect(page.locator(this.radioHoursPerWeek)).toContainText(holidayEntitlementPage_content.radioHoursPerWeek),
-            expect(page.locator(this.radioAnnualisedHours)).toContainText(holidayEntitlementPage_content.radioAnnualisedHours),
-            expect(page.locator(this.radioCompressedHours)).toContainText(holidayEntitlementPage_content.radioCompressedHours),
+            expect(page.locator(this.title)).toContainText(holidayEntitlement_content.pageTitle),
+            expect(page.locator(this.text)).toContainText(holidayEntitlement_content.divText),
+            expect(page.locator(this.radioDaysPerWeek)).toContainText(holidayEntitlement_content.radioDaysPerWeek),
+            expect(page.locator(this.radioHoursPerWeek)).toContainText(holidayEntitlement_content.radioHoursPerWeek),
+            expect(page.locator(this.radioAnnualisedHours)).toContainText(holidayEntitlement_content.radioAnnualisedHours),
+            expect(page.locator(this.radioCompressedHours)).toContainText(holidayEntitlement_content.radioCompressedHours),
             // indentation scuffed above.
         ]);
 
@@ -38,14 +38,25 @@ class HolidayEntitlementPage {
     }
 
     async continueOn(page: Page): Promise<void> {
-        // Click the continue button
-        await this.selectDaysPerWeek(page);
         await page.getByRole("button", { name: "Continue" }).click();
     }
 
-    async selectDaysPerWeek(page: Page): Promise<void> {
+    async selectDaysPerWeekAndContinue(page: Page): Promise<void> {
         await page.locator(this.radioDaysPerWeek).click();
+        await this.continueOn(page);
     }
+
+    async selectAnnualisedHoursAndContinue(page: Page): Promise<void> {
+        await page.locator(this.radioAnnualisedHours).click();
+        await this.continueOn(page);
+    }
+
+    async selectShiftAndContinue(page: Page): Promise<void> {
+        await page.locator(this.radioShift).click();
+        await this.continueOn(page);
+    }
+
+
 }
 
 export default HolidayEntitlementPage;

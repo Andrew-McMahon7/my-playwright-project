@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 import {expect} from "@playwright/test";
-import resultPage_content from "../content/resultPage_content";
+import result_content from "../content/result_content";
 import axeTest from "../accessibilityTestHelper";
 
 class ResultPage {
@@ -9,15 +9,13 @@ class ResultPage {
 
     constructor() {
         this.title = `.govuk-heading-xl`
-        this.text = `.summary`
+        this.text = `.govuk-govspeak`
     }
 
-    async checkPageLoads(page: Page): Promise<void> {
-        // Check elements of the page
+    async checkPageLoads(page: Page, expectedSummary: string): Promise<void> {
         await Promise.all([
-            expect(page.locator(this.title)).toContainText(resultPage_content.pageTitle),
-            expect(page.locator(this.text)).toContainText(resultPage_content.divText),
-            // indentation scuffed above.
+            expect(page.locator(this.title)).toContainText(result_content.pageTitle),
+            expect(page.locator(this.text)).toContainText(expectedSummary),
         ]);
 
         await axeTest(page);

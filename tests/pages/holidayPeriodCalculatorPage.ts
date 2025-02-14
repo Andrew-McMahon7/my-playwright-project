@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 import {expect} from "@playwright/test";
-import holidayPeriodCalculatorPage_content from "../content/holidayPeriodCalculatorPage_content";
+import holidayPeriodCalculator_content from "../content/holidayPeriodCalculator_content";
 import axeTest from "../accessibilityTestHelper";
 
 class HolidayPeriodCalculatorPage {
@@ -18,28 +18,30 @@ class HolidayPeriodCalculatorPage {
         this.radioStartAndLeavePartWayThroughYear = `label[for="response-3"]`
     }
 
-    async checkPageLoads(page: Page): Promise<void> {
-        // Check elements of the page
+    async checkPageLoads(page: Page, expectedTitle: string): Promise<void> {
         await Promise.all([
-            expect(page.locator(this.title)).toContainText(holidayPeriodCalculatorPage_content.pageTitle),
-            expect(page.locator(this.radioFullLeaveYear)).toContainText(holidayPeriodCalculatorPage_content.radioFullLeaveYear),
-            expect(page.locator(this.radioStartingPartWayThroughYear)).toContainText(holidayPeriodCalculatorPage_content.radioStartingPartWayThroughYear),
-            expect(page.locator(this.radioLeavingPartWayThroughYear)).toContainText(holidayPeriodCalculatorPage_content.radioLeavingPartWayThroughYear),
-            expect(page.locator(this.radioStartAndLeavePartWayThroughYear)).toContainText(holidayPeriodCalculatorPage_content.radioStartAndLeavePartWayThroughYear),
-            // indentation scuffed above.
+            expect(page.locator(this.title)).toContainText(expectedTitle),
+            expect(page.locator(this.radioFullLeaveYear)).toContainText(holidayPeriodCalculator_content.radioFullLeaveYear),
+            expect(page.locator(this.radioStartingPartWayThroughYear)).toContainText(holidayPeriodCalculator_content.radioStartingPartWayThroughYear),
+            expect(page.locator(this.radioLeavingPartWayThroughYear)).toContainText(holidayPeriodCalculator_content.radioLeavingPartWayThroughYear),
+            expect(page.locator(this.radioStartAndLeavePartWayThroughYear)).toContainText(holidayPeriodCalculator_content.radioStartAndLeavePartWayThroughYear),
         ]);
 
         await axeTest(page);
     }
 
     async continueOn(page: Page): Promise<void> {
-        // Click the continue button
-        await this.selectDaysPerWeek(page);
         await page.getByRole("button", { name: "Continue" }).click();
     }
 
-    async selectDaysPerWeek(page: Page): Promise<void> {
+    async selectFullyYearAndContinueOn(page: Page): Promise<void> {
         await page.locator(this.radioFullLeaveYear).click();
+        await this.continueOn(page);
+    }
+
+    async selectStartingAndLeavingPartWayThroughYearAndContinueOn(page: Page): Promise<void> {
+        await page.locator(this.radioStartAndLeavePartWayThroughYear).click();
+        await this.continueOn(page);
     }
 }
 
